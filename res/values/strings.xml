@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">beacon</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">aQui</string>
+    <string name="bt_off">BT Off</string>
+    <string name="bt_on">BT On</string>
+    <string name="con_off">Continuous Off</string>
+    <string name="con_on">Continuous On</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_offers">My Offers</string>
+
+</resources>
