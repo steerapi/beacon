@@ -167,8 +167,10 @@ public class MainActivity extends FragmentActivity {
 									public void onClick(DialogInterface dialog,
 											int id) {
 										SharedPreferences settings = MainActivity.this
-												.getSharedPreferences(PREFS_NAME, 0);
-										String interval = settings.getString("interval", "15s");
+												.getSharedPreferences(
+														PREFS_NAME, 0);
+										String interval = settings.getString(
+												"interval", "15s");
 										setTimerInterval(interval);
 									}
 								})
@@ -189,7 +191,7 @@ public class MainActivity extends FragmentActivity {
 				alertDialog.show();
 			}
 		});
-		
+
 		FragmentManager fm = getSupportFragmentManager();
 
 		menuFragment = new MenuFragment();
@@ -299,6 +301,23 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
 		});
+
+		// Start BTService
+		Intent btIntent = new Intent(this.getApplicationContext(),
+				BTService.class);
+		AlarmManager alarmManager = (AlarmManager) this.getApplicationContext()
+				.getSystemService(Context.ALARM_SERVICE);
+		PendingIntent pendingIntent = PendingIntent.getService(
+				this.getApplicationContext(), 987654321, btIntent, 0);
+		try {
+			alarmManager.cancel(pendingIntent);
+		} catch (Exception e) {
+
+		}
+		int timeForAlarm = 30000;
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+				System.currentTimeMillis() + timeForAlarm, timeForAlarm,
+				pendingIntent);
 	}
 
 	private ParseUser user;
@@ -449,7 +468,7 @@ public class MainActivity extends FragmentActivity {
 
 			// show it
 			alertDialog.show();
-			
+
 		} else {
 			FragmentTransaction ft = fm.beginTransaction();
 			if (fragment != null) {
@@ -459,7 +478,7 @@ public class MainActivity extends FragmentActivity {
 			ft.commit();
 		}
 	}
-	
+
 	public void setTimerInterval(String text) {
 		if (text.equals("15s")) {
 			setTimerInterval(15000);
@@ -490,13 +509,13 @@ public class MainActivity extends FragmentActivity {
 				"Automatic launch is at " + text, Toast.LENGTH_SHORT).show();
 		Intent myIntent = new Intent(activity, MainActivity.class);
 		PendingIntent pendingIntent = PendingIntent.getService(activity, 0,
-				myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+				myIntent, 0);
 
 		AlarmManager alarmManager = (AlarmManager) activity
 				.getSystemService(Context.ALARM_SERVICE);
 
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-				AlarmManager.INTERVAL_DAY, calendar.getTimeInMillis(),
+				AlarmManager.INTERVAL_DAY, calendar.getTimeInMillis() + 5000,
 				pendingIntent);
 		return pendingIntent;
 	}
@@ -508,5 +527,5 @@ public class MainActivity extends FragmentActivity {
 			couponQuery.findInBackground(findCallback);
 		}
 	}
-	
+
 }

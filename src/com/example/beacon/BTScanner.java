@@ -82,9 +82,9 @@ public class BTScanner {
 			}
 		}
 	};
-	private Activity main;
+	private Context main;
 
-	public BTScanner(Activity _main) {
+	public BTScanner(Context _main) {
 		main = _main;
 		mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 		onResume();
